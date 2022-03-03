@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-
 // const validator = require('validator');
+
 const tourSchema = new mongoose.Schema(
   {
     name: {
@@ -27,7 +27,7 @@ const tourSchema = new mongoose.Schema(
       required: [true, 'A tour must have a difficulty'],
       enum: {
         values: ['easy', 'medium', 'difficult'],
-        required: 'Difficulty is either: easy, medium, difficult'
+        message: 'Difficulty is either: easy, medium, difficult'
       }
     },
     ratingsAverage: {
@@ -85,7 +85,7 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
-tourSchema.virtual('durationonWeeks').get(function(){
+tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
 });
 
@@ -95,10 +95,21 @@ tourSchema.pre('save', function(next) {
   next();
 });
 
+// tourSchema.pre('save', function(next) {
+//   console.log('Will save document...');
+//   next();
+// });
+
+// tourSchema.post('save', function(doc, next) {
+//   console.log(doc);
+//   next();
+// });
+
 // QUERY MIDDLEWARE
 // tourSchema.pre('find', function(next) {
 tourSchema.pre(/^find/, function(next) {
   this.find({ secretTour: { $ne: true } });
+
   this.start = Date.now();
   next();
 });
@@ -111,11 +122,10 @@ tourSchema.post(/^find/, function(docs, next) {
 // AGGREGATION MIDDLEWARE
 tourSchema.pre('aggregate', function(next) {
   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+
   console.log(this.pipeline());
   next();
 });
-
-
 
 const Tour = mongoose.model('Tour', tourSchema);
 
