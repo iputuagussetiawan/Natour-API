@@ -116,6 +116,12 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id'
+});
+
 tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
 });
@@ -125,6 +131,13 @@ tourSchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
+
+// Virtual populate
+// tourSchema.virtual('reviews', {
+//   ref: 'Review',
+//   foreignField: 'tour',
+//   localField: '_id'
+// });
 
 // tourSchema.pre('save', async function(next) {
 //   const guidesPromises = this.guides.map(async id => await User.findById(id));
