@@ -6,6 +6,9 @@ const reviewRouter = require('./../routes/reviewRoutes');
 
 const router = express.Router();
 
+// Protect all routes after this middleware
+router.use(authController.protect);
+
 // router.param('id', tourController.checkID);
 // router
 //   .route('/:tourId/reviews')
@@ -26,19 +29,22 @@ router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 
 router
   .route('/')
-  .get(authController.protect, tourController.getAllTours)
-  .post(tourController.createTour);
+  .get(tourController.getAllTours)
+  .post(
+    authController.restrictTo('admin', 'lead-guide'),
+    tourController.createTour
+  );
 
 router
   .route('/:id')
   .get(tourController.getTour)
-  .patch(tourController.updateTour)
+  .patch(
+    authController.restrictTo('admin', 'lead-guide'),
+    tourController.updateTour
+  )
   .delete(
-    authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
     tourController.deleteTour
   );
-
-
 
 module.exports = router;
