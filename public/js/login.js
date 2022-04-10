@@ -1,10 +1,11 @@
+/* eslint-disable node/no-unsupported-features/es-syntax */
 import axios from 'axios';
 import { showAlert } from './alerts';
 
 export const login = async (email, password) => {
-  try{
+  try {
     const res = await axios({
-      method:'POST',
+      method: 'POST',
       url:'http://localhost:3000/api/v1/users/login',
       data:{
         email,

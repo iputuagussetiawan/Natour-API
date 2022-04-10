@@ -14,11 +14,8 @@
 
     <title>Natours | The Park Camper Tour</title>
 
-    <script src="https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js"></script>
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css"
-      rel="stylesheet"
-    />
+ <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+ <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
   </head>
   <body>
     <header class="header">
@@ -196,7 +193,7 @@
       <div id="map"></div>
       <script>
         mapboxgl.accessToken =
-          'pk.eyJ1Ijoiam9uYXNzY2htZWR0bWFubiIsImEiOiJjam54ZmM5N3gwNjAzM3dtZDNxYTVlMnd2In0.ytpI7V7w7cyT1Kq5rT9Z1A';
+          'pk.eyJ1IjoiYWd1c3NldGlhd2FuaXB1dHUiLCJhIjoiY2wweWxtcnVzMXVvazNibm0zOG03ZHF4cyJ9.rTxLmVpc6iJASBJ3V75PfQ';
 
         const geojson = {
           type: 'FeatureCollection',
@@ -246,7 +243,7 @@
 
         const map = new mapboxgl.Map({
           container: 'map',
-          style: 'mapbox://styles/jonasschmedtmann/cjnxfn3zk7bj52rpegdltx58h',
+          style: 'mapbox://styles/mapbox/streets-v11',
           scrollZoom: false
         });
 
